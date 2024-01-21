@@ -1,0 +1,64 @@
+@import "../../../styles/variables";
+@import "../../../styles/colors";
+
+.wrapper {
+  color: white;
+  font-family: $urbanist-font-stack;
+  padding-bottom: 20px;
+  border-bottom: solid white 1px;
+  display: flex;
+  flex-direction: row;
+
+  .current {
+    flex-basis: 32.7%;
+    margin-right: 20px;
+  }
+
+  .archives {
+    flex-basis: 67.3%;
+  }
+}
+
+.title {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 20px 0px;
+
+  &.light {
+    font-weight: 300;
+  }
+}
+
+.archives {
+  overflow: auto;
+}
+
+.musicTiles {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: row;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 20px;
+
+  /* Styling for WebKit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $light-beaver; /* Set the color of the thumb */
+    border-radius: 4px; /* Set the border radius of the thumb */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $grey; /* Set the color of the track */
+  }
+}
+
+.currWeek {
+  font-size: 1.3em;
+  font-weight: 300;
+  margin-top: 6px;
+}

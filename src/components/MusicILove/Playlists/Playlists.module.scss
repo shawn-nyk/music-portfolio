@@ -1,0 +1,34 @@
+@import "../../../styles/variables";
+
+.wrapper {
+  color: white;
+  font-family: $urbanist-font-stack;
+  padding-bottom: 20px;
+  border-bottom: solid white 1px;
+}
+
+.title {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.playlists {
+  display: flex;
+  flex-direction: row;
+}
+
+.playlistLabel {
+  font-size: 1.3em;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.playlist {
+  flex-basis: 33.333%;
+  margin-right: 20px;
+
+  &.last {
+    margin-right: 0px;
+  }
+}

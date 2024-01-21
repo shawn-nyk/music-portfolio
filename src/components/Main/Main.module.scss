@@ -1,0 +1,15 @@
+@import "../../styles/colors";
+
+.header {
+  background-color: $darker-grey;
+  height: 89px;
+  width: 100%;
+  margin-bottom: 10px;
+
+  &.floating {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 97px;
+  }
+}

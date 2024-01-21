@@ -1,0 +1,8 @@
+@import "../../../../styles/colors";
+
+.wrapper {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  background-color: $dark-grey;
+}

@@ -16,6 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700&display=swap"
+        />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );

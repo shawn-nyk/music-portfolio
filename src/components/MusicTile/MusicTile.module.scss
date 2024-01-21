@@ -1,0 +1,58 @@
+@import "../../styles/variables";
+@import "../../styles/colors";
+
+$img-padding: 20px;
+
+.wrapper {
+  width: 450px;
+  font-family: $urbanist-font-stack;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  width: 55%;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.bokehFields {
+    &:hover {
+      color: $light-leaf;
+    }
+  }
+
+  &.lilacSpring {
+    &:hover {
+      color: $lilac;
+    }
+  }
+}
+
+.album {
+  margin-bottom: 20px;
+  padding: $img-padding;
+  border-radius: 10px;
+  background-color: $dark-grey;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.albumDetails {
+  display: flex;
+  flex-direction: column;
+  margin-left: $img-padding;
+}
+
+.albumTitle {
+  font-size: 1.6em;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.artistName {
+  font-size: 1em;
+  font-weight: 300;
+}

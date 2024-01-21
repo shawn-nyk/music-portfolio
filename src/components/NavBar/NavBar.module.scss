@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+@import "../../styles/colors";
+
+.navBar {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  font-family: $urbanist-font-stack;
+  color: white;
+  align-items: center; // Center vertically
+  justify-content: center; // Center horizontally
+  font-size: 1.3em;
+  font-weight: 300;
+  margin: 0px;
+  padding: 8px 0px;
+  border-top: solid white 1px;
+  border-bottom: solid white 1px;
+}
+
+.navItem {
+  padding: 1px 32px;
+  border-right: solid white 1px;
+
+  &.last {
+    border-right: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.bokehFields {
+    &:hover {
+      color: $light-leaf;
+    }
+  }
+
+  &.lilacSpring {
+    &:hover {
+      color: $lilac;
+    }
+  }
+
+  &.musicILove {
+    &:hover {
+      color: $light-beaver;
+    }
+  }
+}

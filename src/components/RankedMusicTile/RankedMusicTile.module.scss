@@ -1,0 +1,51 @@
+@import "../../styles/variables";
+@import "../../styles/colors";
+
+$img-padding: 12px;
+
+.wrapper {
+  width: 124px;
+  height: 190px;
+  font-family: $urbanist-font-stack;
+  // background-color: red;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+    color: $light-beaver;
+  }
+}
+
+.rank {
+  margin-bottom: 10px;
+}
+
+.album {
+  display: flex;
+  flex-direction: column;
+  padding: $img-padding;
+}
+
+.albumDetails {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.albumTitle {
+  font-size: 1em;
+  font-weight: 600;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.artistName {
+  font-size: 1em;
+  font-weight: 300;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
