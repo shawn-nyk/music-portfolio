@@ -1,18 +1,27 @@
+import { aotysAtom } from "@/atoms/aotyAtom";
+import { sotysAtom } from "@/atoms/sotyAtom";
+import { AOTYS } from "@/constants/aoty";
+import { SOTYS } from "@/constants/soty";
 import { useAtomValue } from "jotai";
 import css from "./MusicILove.module.scss";
+import Oty from "./Oty/Oty";
 import Playlists from "./Playlists/Playlists";
 import Sotw from "./Sotw/Sotw";
-import Soty from "./Soty/Soty";
-import { navIndexAtom } from "@/atoms/pageAtom";
 
-const MusicILove = () => {
-  const navIndex = useAtomValue(navIndexAtom);
+interface MusicILoveProps {
+  isHidden: boolean;
+}
+
+const MusicILove = ({ isHidden }: MusicILoveProps) => {
+  const sotys = useAtomValue(sotysAtom);
+  const aotys = useAtomValue(aotysAtom);
 
   return (
-    <div className={`${css.wrapper} ${navIndex !== 2 ? css.hidden : ""}`}>
+    <div className={`${css.wrapper} ${isHidden ? css.hidden : ""}`}>
       <Playlists />
       <Sotw />
-      <Soty />
+      <Oty title="SOTY" otyList={SOTYS} otys={sotys} />
+      <Oty title="AOTY" otyList={AOTYS} otys={aotys} />
     </div>
   );
 };

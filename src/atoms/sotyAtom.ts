@@ -1,7 +1,10 @@
+import { SOTYS } from "@/constants/soty";
 import { atom } from "jotai";
 
-export const sotysAtom = atom<any>({ "2022": [], "2023": [] }); // TODO: init properly
+const getInitObj = () => {
+  const initObj: any = {};
+  SOTYS.forEach((soty) => (initObj[soty[0] as string] = []));
+  return initObj;
+};
 
-// {
-//   "2023": [{}, {}, {}]
-// }
+export const sotysAtom = atom<any>(getInitObj());

@@ -1,19 +1,21 @@
 "use client";
 import { navIndexAtom } from "@/atoms/pageAtom";
 import { sotwsAtom } from "@/atoms/sotwAtom";
+import { sotysAtom } from "@/atoms/sotyAtom";
 import Header from "@/components/Header/Header";
 import NavBar from "@/components/NavBar/NavBar";
 import { BOKEH_FIELDS_ALBUMS } from "@/constants/bokehFields";
 import { LILAC_SPRING_ALBUMS } from "@/constants/lilacSpring";
 import { SOTWS } from "@/constants/sotw";
+import { SOTYS } from "@/constants/soty";
 import { Album, SpotifyAlbum } from "@/models/album";
-import { SetStateAction, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { SetStateAction, useAtomValue, useSetAtom } from "jotai";
 import { Dispatch, useEffect, useState } from "react";
 import Discog from "../Discog/Discog";
 import MusicILove from "../MusicILove/MusicILove";
 import css from "./Main.module.scss";
-import { sotysAtom } from "@/atoms/sotyAtom";
-import { SOTYS } from "@/constants/soty";
+import { AOTYS } from "@/constants/aoty";
+import { aotysAtom } from "@/atoms/aotyAtom";
 
 const Main = () => {
   const [accessToken, setAccessToken] = useState<string>("");
@@ -22,6 +24,7 @@ const Main = () => {
   const [bokehFieldsAlbums, setBokehFieldsAlbums] = useState<Album[]>([]);
   const setSotws = useSetAtom(sotwsAtom);
   const setSotys = useSetAtom(sotysAtom);
+  const setAotys = useSetAtom(aotysAtom);
 
   // Fetch Spotify API access token
   useEffect(() => {
@@ -167,12 +170,61 @@ const Main = () => {
     await Promise.all(SOTYS.map((soty) => fetchSotysForOneYear(soty)));
   };
 
+  const fetchAotys = async () => {
+    const fetchAotysForOneYear = async (aoty: any) => {
+      try {
+        const year = aoty[0];
+        const aotyList = aoty[1];
+        const responses = await Promise.all(
+          aotyList.map((aotyArr: any) => {
+            const aotyId = aotyArr[1];
+            return fetch(`https://api.spotify.com/v1/albums/${aotyId}`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+          })
+        );
+        const aotys: any[] = await Promise.all(
+          responses.map((res) => res.json())
+        );
+
+        if (aotys.find((aoty) => aoty.error)) {
+          alert("Error: " + aotys.find((aoty) => aoty.error)!.error!.message);
+        } else {
+          aotys.forEach((aoty) => {
+            setAotys((prev: { [x: string]: any }) => ({
+              ...prev,
+              [year]: [
+                ...prev[year],
+                {
+                  id: aoty.id,
+                  name: aoty.name,
+                  coverArtUrl: aoty.images[0].url,
+                  url: aoty.external_urls.spotify,
+                  artists: aoty.artists
+                    .map((artist: { name: string }) => artist.name)
+                    .join(", "),
+                },
+              ],
+            }));
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching AOTY data:", error);
+      }
+    };
+
+    await Promise.all(AOTYS.map((aoty) => fetchAotysForOneYear(aoty)));
+  };
+
   useEffect(() => {
     if (accessToken) {
       fetchAlbumData(LILAC_SPRING_ALBUMS, setLilacSpringAlbums);
       fetchAlbumData(BOKEH_FIELDS_ALBUMS, setBokehFieldsAlbums);
       fetchSotws();
       fetchSotys();
+      fetchAotys();
     }
   }, [accessToken]);
 
@@ -183,9 +235,9 @@ const Main = () => {
         <NavBar />
       </div>
       <div className={css.header}></div>
-      {navIndex === 0 && <Discog albums={bokehFieldsAlbums} />}
-      {navIndex === 1 && <Discog albums={lilacSpringAlbums} />}
-      <MusicILove />
+      <Discog albums={bokehFieldsAlbums} isHidden={navIndex !== 0} />
+      <Discog albums={lilacSpringAlbums} isHidden={navIndex !== 1} />
+      <MusicILove isHidden={navIndex !== 2} />
     </main>
   );
 };

@@ -39,6 +39,7 @@ $img-padding: 12px;
   font-weight: 600;
   text-wrap: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .artistName {
@@ -46,4 +47,5 @@ $img-padding: 12px;
   font-weight: 300;
   text-wrap: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }

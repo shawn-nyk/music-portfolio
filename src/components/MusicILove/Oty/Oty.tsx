@@ -1,17 +1,22 @@
-import { SOTYS } from "@/constants/soty";
 import { useState } from "react";
-import css from "./Soty.module.scss";
-import SotyList from "./SotyList/SotyList";
+import css from "./Oty.module.scss";
+import OtyList from "./OtyList/OtyList";
 
-const Soty = () => {
+interface OtyProps {
+  title: string;
+  otyList: any;
+  otys: any;
+}
+
+const Oty = ({ title, otyList, otys }: OtyProps) => {
   const [selectedYear, setSelectedYear] = useState<string>("");
 
   return (
     <div className={css.wrapper}>
-      <div className={css.title}>SOTY</div>
+      <div className={css.title}>{title}</div>
       <div className={css.selectors}>
-        {SOTYS.map((soty: any[]) => {
-          const year = soty[0] as string;
+        {otyList.map((oty: any[]) => {
+          const year = oty[0] as string;
           return (
             <div key={year}>
               <div
@@ -26,9 +31,9 @@ const Soty = () => {
           );
         })}
       </div>
-      <SotyList year={selectedYear} />
+      <OtyList year={selectedYear} otys={otys} />
     </div>
   );
 };
 
-export default Soty;
+export default Oty;
