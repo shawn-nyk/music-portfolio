@@ -235,9 +235,13 @@ const Main = () => {
         <NavBar />
       </div>
       <div className={css.header}></div>
-      <Discog albums={bokehFieldsAlbums} isHidden={navIndex !== 0} />
-      <Discog albums={lilacSpringAlbums} isHidden={navIndex !== 1} />
-      <MusicILove isHidden={navIndex !== 2} />
+      <div className={css.contentWrapper}>
+        <div className={css.content}>
+          <Discog albums={bokehFieldsAlbums} isHidden={navIndex !== 0} />
+          <Discog albums={lilacSpringAlbums} isHidden={navIndex !== 1} />
+          <MusicILove isHidden={navIndex !== 2} />
+        </div>
+      </div>
     </main>
   );
 };

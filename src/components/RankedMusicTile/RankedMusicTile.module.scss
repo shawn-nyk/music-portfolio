@@ -7,7 +7,10 @@ $img-padding: 12px;
   width: 124px;
   height: 190px;
   font-family: $urbanist-font-stack;
-  // background-color: red;
+
+  &:hover {
+    background-color: $dark-beaver;
+  }
 }
 
 .link {
@@ -16,7 +19,6 @@ $img-padding: 12px;
 
   &:hover {
     cursor: pointer;
-    color: $light-beaver;
   }
 }
 
