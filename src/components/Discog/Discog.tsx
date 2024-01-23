@@ -1,9 +1,9 @@
-import { Album } from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
 import MusicTile from "../MusicTile/MusicTile";
 import css from "./Discog.module.scss";
 
 interface DiscogProps {
-  albums: Album[];
+  albums: MusicUnit[];
   isHidden: boolean;
 }
 

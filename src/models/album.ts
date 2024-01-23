@@ -1,10 +1,4 @@
-export interface Album {
-  id: string;
-  name: string;
-  coverArtUrl: string;
-  url: string;
-  artists: string;
-}
+import { Error } from "./error";
 
 export interface SpotifyAlbum {
   id: string;
@@ -15,6 +9,9 @@ export interface SpotifyAlbum {
   error?: Error;
 }
 
-interface Error {
-  message: string;
+export type Aoty = string[];
+export type AotyList = (string | Aoty[])[];
+
+export interface GetAlbumsResponse {
+  albums: SpotifyAlbum[];
 }

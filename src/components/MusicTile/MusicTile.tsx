@@ -1,10 +1,10 @@
 import { navIndexAtom } from "@/atoms/pageAtom";
-import { Album } from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
 import { useAtomValue } from "jotai";
 import css from "./MusicTile.module.scss";
 
 interface MusicTileProps {
-  album: Album;
+  album: MusicUnit;
 }
 
 const MusicTile = (props: MusicTileProps) => {

@@ -1,8 +1,9 @@
-const soty2023 = [
+import { Soty, SotyList } from "@/models/track";
+
+const sotys2023: Soty[] = [
   ["Jungle - Back On 74", "19kHhX6f6EfLU7rcO3RqjO"],
   ["Skrillex - Rumble", "1GfBLbAhZUWdseuDqhocmn"],
   ["Taylor Swift - Now That We Don't Talk", "5KD6AEm19QnMbfWpfoOHMl"],
-  ["Kieran Hebden - Darkness, Darkness", "2ih7916Ch16x9n75yhc3Ok"],
   ["Wild Nothing - Dial Tone", "5kgB80lRDpVcgl5a7BiGRr"],
   ["billy woods, Kenny Segal - Hangman", "4KDKMWbMBFJvfr5fEqYx0T"],
   ["Tinashe - Treason", "0HVcgx0BfhS5cjLrFl3Tmc"],
@@ -39,6 +40,7 @@ const soty2023 = [
   ["Sampha - Spirit 2.0", "57s2fT1A0hOxscqF2Jipd5"],
   ["Yo La Tengo - Miles Away", "0crUa9CCdhANfB7vUWVeJ5"],
   ["Julie Byrne - Moonless", "3lCSiBordGtNz6yeF9JZA6"],
+  ["Jessie Ware - Hello Love", "40bgBzGrYBURVjiQ4itEkh"],
   ["MGMT - Mother Nature", "3kC6EmjBbLcnv1aAsAEGPP"],
   ["Olivia Rodrigo - making the bed", "5CscrLqFBgPfZR8fGtikov"],
   ["Jess Williamson - Hunter", "3aDfvlypxuh57TOqr7v3V4"],
@@ -51,12 +53,12 @@ const soty2023 = [
   ["Caroline Polachek - Welcome To My Island", "2QeUnYtvlfQdfWxzF3b1ud"],
 ];
 
-const soty2022 = [
+const sotys2022: Soty[] = [
   ["Monsieur Perine - Nada", "343ZCS0FprOuhGbUxmIbmj"],
   ["Paramore - 26", "2EcQY09CYgJ1qk6H1qZf8h"],
 ];
 
-export const SOTYS = [
-  ["2023", soty2023],
-  ["2022", soty2022],
+export const SOTYS: SotyList[] = [
+  ["2023", sotys2023],
+  ["2022", sotys2022],
 ];

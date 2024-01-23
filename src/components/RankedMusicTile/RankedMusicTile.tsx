@@ -1,8 +1,8 @@
-import { Album } from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
 import css from "./RankedMusicTile.module.scss";
 
 interface RankedMusicTileProps {
-  album: Album;
+  album: MusicUnit;
   rank: number;
 }
 

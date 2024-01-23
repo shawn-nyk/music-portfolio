@@ -1,8 +1,8 @@
-import { Album } from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
 import css from "./MiniMusicTile.module.scss";
 
 interface MiniMusicTileProps {
-  album: Album;
+  album: MusicUnit;
 }
 
 const MiniMusicTile = (props: MiniMusicTileProps) => {

@@ -1,27 +1,34 @@
 "use client";
+import { aotysAtom } from "@/atoms/aotyAtom";
 import { navIndexAtom } from "@/atoms/pageAtom";
 import { sotwsAtom } from "@/atoms/sotwAtom";
 import { sotysAtom } from "@/atoms/sotyAtom";
 import Header from "@/components/Header/Header";
 import NavBar from "@/components/NavBar/NavBar";
+import { AOTYS } from "@/constants/aoty";
 import { BOKEH_FIELDS_ALBUMS } from "@/constants/bokehFields";
 import { LILAC_SPRING_ALBUMS } from "@/constants/lilacSpring";
 import { SOTWS } from "@/constants/sotw";
 import { SOTYS } from "@/constants/soty";
-import { Album, SpotifyAlbum } from "@/models/album";
+import {
+  Aoty,
+  AotyList,
+  GetAlbumsResponse,
+  SpotifyAlbum,
+} from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
+import { GetTracksResponse, Soty, SotyList } from "@/models/track";
 import { SetStateAction, useAtomValue, useSetAtom } from "jotai";
 import { Dispatch, useEffect, useState } from "react";
 import Discog from "../Discog/Discog";
 import MusicILove from "../MusicILove/MusicILove";
 import css from "./Main.module.scss";
-import { AOTYS } from "@/constants/aoty";
-import { aotysAtom } from "@/atoms/aotyAtom";
 
 const Main = () => {
   const [accessToken, setAccessToken] = useState<string>("");
   const navIndex = useAtomValue(navIndexAtom);
-  const [lilacSpringAlbums, setLilacSpringAlbums] = useState<Album[]>([]);
-  const [bokehFieldsAlbums, setBokehFieldsAlbums] = useState<Album[]>([]);
+  const [lilacSpringAlbums, setLilacSpringAlbums] = useState<MusicUnit[]>([]);
+  const [bokehFieldsAlbums, setBokehFieldsAlbums] = useState<MusicUnit[]>([]);
   const setSotws = useSetAtom(sotwsAtom);
   const setSotys = useSetAtom(sotysAtom);
   const setAotys = useSetAtom(aotysAtom);
@@ -34,6 +41,7 @@ const Main = () => {
         const data = await response.json();
 
         if (data.access_token) {
+          console.log("Access token: ", data.access_token);
           setAccessToken(data.access_token);
         } else {
           console.error("Error retrieving access token:", data.error);
@@ -47,7 +55,7 @@ const Main = () => {
 
   const fetchAlbumData = async (
     albumIds: string[],
-    setAlbums: Dispatch<SetStateAction<Album[]>>
+    setAlbums: Dispatch<SetStateAction<MusicUnit[]>>
   ) => {
     try {
       const responses = await Promise.all(
@@ -84,6 +92,7 @@ const Main = () => {
     }
   };
 
+  // TODO: use get multiple tracks API call instead
   const fetchSotws = async () => {
     try {
       const responses = await Promise.all(
@@ -123,43 +132,50 @@ const Main = () => {
   };
 
   const fetchSotys = async () => {
-    const fetchSotysForOneYear = async (soty: any) => {
+    const fetchSotysForOneYear = async (soty: SotyList) => {
       try {
-        const year = soty[0];
-        const sotyList = soty[1];
+        const year = soty[0] as string;
+        const sotyList = (soty[1] as Soty[]).map((e) => e[1]);
+
+        const aggSotyList = [];
+        for (let i = 0; i < sotyList.length; i += 20) {
+          aggSotyList.push(sotyList.slice(i, i + 20).join("%2C"));
+        }
+
         const responses = await Promise.all(
-          sotyList.map((sotyArr: any) => {
-            const sotyId = sotyArr[1];
-            return fetch(`https://api.spotify.com/v1/tracks/${sotyId}`, {
+          aggSotyList.map((sotyIds) => {
+            return fetch(`https://api.spotify.com/v1/tracks?ids=${sotyIds}`, {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
             });
           })
         );
-        const sotys: any[] = await Promise.all(
+        const sotyArrs: GetTracksResponse[] = await Promise.all(
           responses.map((res) => res.json())
         );
 
-        if (sotys.find((soty) => soty.error)) {
-          alert("Error: " + sotys.find((soty) => soty.error)!.error!.message);
-        } else {
-          sotys.forEach((soty) => {
-            setSotys((prev: { [x: string]: any }) => ({
-              ...prev,
-              [year]: [
-                ...prev[year],
-                {
-                  id: soty.id,
-                  name: soty.name,
-                  coverArtUrl: soty.album.images[0].url,
-                  url: soty.external_urls.spotify,
-                  artists: soty.artists
-                    .map((artist: { name: string }) => artist.name)
-                    .join(", "),
-                },
-              ],
-            }));
+        if (
+          !sotyArrs.find((sotyArr) => sotyArr.tracks.find((soty) => soty.error))
+        ) {
+          sotyArrs.forEach((sotyArr) => {
+            sotyArr.tracks.forEach((soty) => {
+              setSotys((prev) => ({
+                ...prev,
+                [year]: [
+                  ...prev[year],
+                  {
+                    id: soty.id,
+                    name: soty.name,
+                    coverArtUrl: soty.album.images[0].url,
+                    url: soty.external_urls.spotify,
+                    artists: soty.artists
+                      .map((artist: { name: string }) => artist.name)
+                      .join(", "),
+                  },
+                ],
+              }));
+            });
           });
         }
       } catch (error) {
@@ -171,43 +187,50 @@ const Main = () => {
   };
 
   const fetchAotys = async () => {
-    const fetchAotysForOneYear = async (aoty: any) => {
+    const fetchAotysForOneYear = async (aoty: AotyList) => {
       try {
-        const year = aoty[0];
-        const aotyList = aoty[1];
+        const year = aoty[0] as string;
+        const aotyList = (aoty[1] as Aoty[]).map((e) => e[1]);
+
+        const aggAotyList = [];
+        for (let i = 0; i < aotyList.length; i += 20) {
+          aggAotyList.push(aotyList.slice(i, i + 20).join("%2C"));
+        }
+
         const responses = await Promise.all(
-          aotyList.map((aotyArr: any) => {
-            const aotyId = aotyArr[1];
-            return fetch(`https://api.spotify.com/v1/albums/${aotyId}`, {
+          aggAotyList.map((aotyIds) => {
+            return fetch(`https://api.spotify.com/v1/albums?ids=${aotyIds}`, {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },
             });
           })
         );
-        const aotys: any[] = await Promise.all(
+        const aotyArrs: GetAlbumsResponse[] = await Promise.all(
           responses.map((res) => res.json())
         );
 
-        if (aotys.find((aoty) => aoty.error)) {
-          alert("Error: " + aotys.find((aoty) => aoty.error)!.error!.message);
-        } else {
-          aotys.forEach((aoty) => {
-            setAotys((prev: { [x: string]: any }) => ({
-              ...prev,
-              [year]: [
-                ...prev[year],
-                {
-                  id: aoty.id,
-                  name: aoty.name,
-                  coverArtUrl: aoty.images[0].url,
-                  url: aoty.external_urls.spotify,
-                  artists: aoty.artists
-                    .map((artist: { name: string }) => artist.name)
-                    .join(", "),
-                },
-              ],
-            }));
+        if (
+          !aotyArrs.find((aotyArr) => aotyArr.albums.find((aoty) => aoty.error))
+        ) {
+          aotyArrs.forEach((aotyArr) => {
+            aotyArr.albums.forEach((aoty) => {
+              setAotys((prev) => ({
+                ...prev,
+                [year]: [
+                  ...prev[year],
+                  {
+                    id: aoty.id,
+                    name: aoty.name,
+                    coverArtUrl: aoty.images[0].url,
+                    url: aoty.external_urls.spotify,
+                    artists: aoty.artists
+                      .map((artist: { name: string }) => artist.name)
+                      .join(", "),
+                  },
+                ],
+              }));
+            });
           });
         }
       } catch (error) {

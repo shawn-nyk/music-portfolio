@@ -1,6 +1,6 @@
 import RankedMusicTile from "@/components/RankedMusicTile/RankedMusicTile";
 import { RANK_TOTAL } from "@/constants/general";
-import { Album } from "@/models/album";
+import { MusicUnit } from "@/models/musicUnit";
 import css from "./OtyList.module.scss";
 
 interface OtyListProps {
@@ -15,7 +15,7 @@ const OtyList = ({ year, otys }: OtyListProps) => {
     <div className={css.wrapper}>
       {musicPieces && (
         <>
-          {musicPieces.map((oty: Album, idx: number) => (
+          {musicPieces.map((oty: MusicUnit, idx: number) => (
             <div key={oty.id}>
               <RankedMusicTile album={oty} rank={RANK_TOTAL - idx} />
             </div>
