@@ -5,11 +5,16 @@ $img-padding: 12px;
 
 .wrapper {
   width: 124px;
-  height: 165px;
+  height: 190px;
   font-family: $urbanist-font-stack;
-  margin-right: 20px;
-  background-color: $dark-grey;
-  border-radius: 10px;
+
+  &:hover {
+    background-color: $dark-beaver;
+  }
+
+  &.unranked {
+    height: 165px;
+  }
 }
 
 .link {
@@ -18,8 +23,11 @@ $img-padding: 12px;
 
   &:hover {
     cursor: pointer;
-    color: $light-beaver;
   }
+}
+
+.rank {
+  margin-bottom: 10px;
 }
 
 .album {

@@ -34,13 +34,14 @@
 }
 
 .musicTiles {
+  background-color: $dark-grey;
   overflow-x: auto;
   overflow-y: hidden;
   display: flex;
   flex-direction: row;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  padding-bottom: 20px;
+  // padding-bottom: 20px;
 
   /* Styling for WebKit browsers (Chrome, Safari) */
   &::-webkit-scrollbar {
@@ -53,7 +54,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background-color: $grey; /* Set the color of the track */
+    background-color: $dark-grey; /* Set the color of the track */
   }
 }
 

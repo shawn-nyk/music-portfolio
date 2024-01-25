@@ -7,6 +7,7 @@ import css from "./MusicILove.module.scss";
 import Oty from "./Oty/Oty";
 import Playlists from "./Playlists/Playlists";
 import Sotw from "./Sotw/Sotw";
+import AllTimeFaves from "./AllTimeFaves/AllTimeFaves";
 
 interface MusicILoveProps {
   isHidden: boolean;
@@ -22,6 +23,7 @@ const MusicILove = ({ isHidden }: MusicILoveProps) => {
       <Sotw />
       <Oty title="SOTY" otyList={SOTYS} otys={sotys} />
       <Oty title="AOTY" otyList={AOTYS} otys={aotys} />
+      <AllTimeFaves />
     </div>
   );
 };

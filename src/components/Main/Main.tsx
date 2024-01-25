@@ -23,6 +23,8 @@ import { Dispatch, useEffect, useState } from "react";
 import Discog from "../Discog/Discog";
 import MusicILove from "../MusicILove/MusicILove";
 import css from "./Main.module.scss";
+import { ALL_TIME_FAVES } from "@/constants/allTimeFaves";
+import { atfsAtom } from "@/atoms/atfAtom";
 
 const Main = () => {
   const [accessToken, setAccessToken] = useState<string>("");
@@ -32,6 +34,7 @@ const Main = () => {
   const setSotws = useSetAtom(sotwsAtom);
   const setSotys = useSetAtom(sotysAtom);
   const setAotys = useSetAtom(aotysAtom);
+  const setAtfs = useSetAtom(atfsAtom);
 
   // Fetch Spotify API access token
   useEffect(() => {
@@ -241,6 +244,49 @@ const Main = () => {
     await Promise.all(AOTYS.map((aoty) => fetchAotysForOneYear(aoty)));
   };
 
+  const fetchAtfs = async () => {
+    try {
+      const aggAtfsList = [];
+      for (let i = 0; i < ALL_TIME_FAVES.length; i += 20) {
+        aggAtfsList.push(ALL_TIME_FAVES.slice(i, i + 20).join("%2C"));
+      }
+
+      const responses = await Promise.all(
+        aggAtfsList.map((ids) => {
+          return fetch(`https://api.spotify.com/v1/albums?ids=${ids}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+        })
+      );
+      const atfArrs: GetAlbumsResponse[] = await Promise.all(
+        responses.map((res) => res.json())
+      );
+
+      if (!atfArrs.find((arr) => arr.albums.find((album) => album.error))) {
+        atfArrs.forEach((arr) => {
+          arr.albums.forEach((album) => {
+            setAtfs((prev) => [
+              ...prev,
+              {
+                id: album.id,
+                name: album.name,
+                coverArtUrl: album.images[0].url,
+                url: album.external_urls.spotify,
+                artists: album.artists
+                  .map((artist: { name: string }) => artist.name)
+                  .join(", "),
+              },
+            ]);
+          });
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching AOTY data:", error);
+    }
+  };
+
   useEffect(() => {
     if (accessToken) {
       fetchAlbumData(LILAC_SPRING_ALBUMS, setLilacSpringAlbums);
@@ -248,6 +294,7 @@ const Main = () => {
       fetchSotws();
       fetchSotys();
       fetchAotys();
+      fetchAtfs();
     }
   }, [accessToken]);
 
@@ -260,6 +307,7 @@ const Main = () => {
       <div className={css.header}></div>
       <div className={css.contentWrapper}>
         <div className={css.content}>
+          {/* TODO: add remixes/colabs segment to bokeh fields */}
           <Discog albums={bokehFieldsAlbums} isHidden={navIndex !== 0} />
           <Discog albums={lilacSpringAlbums} isHidden={navIndex !== 1} />
           <MusicILove isHidden={navIndex !== 2} />

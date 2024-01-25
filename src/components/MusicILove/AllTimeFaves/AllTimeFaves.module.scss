@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+// @import "../../../styles/colors";
+
+.wrapper {
+  color: white;
+  font-family: $urbanist-font-stack;
+  padding-bottom: 20px;
+  border-bottom: solid white 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 20px 0px;
+}

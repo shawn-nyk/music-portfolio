@@ -23,7 +23,13 @@ const Oty = ({ title, otyList, otys }: OtyProps) => {
                 className={`${css.year} ${
                   selectedYear === year ? css.selected : ""
                 }`}
-                onClick={() => setSelectedYear(year)}
+                onClick={() => {
+                  if (year === selectedYear) {
+                    setSelectedYear("");
+                  } else {
+                    setSelectedYear(year);
+                  }
+                }}
               >
                 {year}
               </div>
@@ -31,7 +37,7 @@ const Oty = ({ title, otyList, otys }: OtyProps) => {
           );
         })}
       </div>
-      <OtyList year={selectedYear} otys={otys} />
+      <OtyList musicPieces={otys[selectedYear]} />
     </div>
   );
 };

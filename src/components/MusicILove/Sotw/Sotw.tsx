@@ -44,7 +44,7 @@ const Sotw = () => {
             <>
               {sotws.map((sotw) => (
                 <div key={sotw.id}>
-                  <MiniMusicTile album={sotw} />
+                  <MiniMusicTile album={sotw} isRanked={false} />
                 </div>
               ))}
             </>

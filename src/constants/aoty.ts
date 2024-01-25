@@ -1,4 +1,6 @@
-const aoty2023 = [
+import { Aoty, AotyList } from "@/models/album";
+
+const aoty2023: Aoty[] = [
   ["Anthony Naples - orbs", "2diDpno1K39g7HtGkPWiTe"],
   ["John Carroll Kirby - Blowout", "1PtMyRufUsbQ81yMxXjSym"],
   ["Khotin - Release Spirit", "3Grw8AYCWpxN7RpOvrtxjF"],
@@ -63,17 +65,17 @@ const aoty2023 = [
   ],
 ];
 
-const aoty2022 = [
+const aoty2022: Aoty[] = [
   ["1969 Collective - 1969", "2NEtbWNxBAfOjMf0WPV38q"],
   ["CEP - Drawing The Target Around The Arrow", "1Uu3fza2uwuAM9kbn5EtBs"],
 ];
 
-const aoty2021 = [
+const aoty2021: Aoty[] = [
   ["CEP - Drawing The Target Around The Arrow", "1Uu3fza2uwuAM9kbn5EtBs"],
   ["1969 Collective - 1969", "2NEtbWNxBAfOjMf0WPV38q"],
 ];
 
-export const AOTYS = [
+export const AOTYS: AotyList[] = [
   ["2023", aoty2023],
   ["2022", aoty2022],
   ["2021", aoty2021],
