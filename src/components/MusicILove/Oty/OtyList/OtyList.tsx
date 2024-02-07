@@ -14,11 +14,7 @@ const OtyList = ({ musicPieces, isRanked = true }: OtyListProps) => {
         <>
           {musicPieces.map((oty: MusicUnit, idx: number) => (
             <div key={oty.id}>
-              <MiniMusicTile
-                album={oty}
-                rank={musicPieces.length - idx}
-                isRanked={isRanked}
-              />
+              <MiniMusicTile album={oty} rank={idx + 1} isRanked={isRanked} />
             </div>
           ))}
         </>

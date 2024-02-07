@@ -44,7 +44,6 @@ const Main = () => {
         const data = await response.json();
 
         if (data.access_token) {
-          console.log("Access token: ", data.access_token);
           setAccessToken(data.access_token);
         } else {
           console.error("Error retrieving access token:", data.error);

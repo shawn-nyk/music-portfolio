@@ -1,6 +1,8 @@
-export const CURRENT_SOTW = "5Uou8idst1XJc0F6MRAk5S"; // The War On Drugs - I Don't Live Here Anymore
+export const CURRENT_SOTW = "69M8oBhX2avkeLX0bCgoDW"; // Ching Cheng Hanji
 
 const sotws = [
+  ["DOMi & JD BECK - SMiLE", "1HJXdfuWc6IlKBMLtITaHD"],
+  ["The War On Drugs - I Don't Live Here Anymore", "5Uou8idst1XJc0F6MRAk5S"],
   ["ABBA - Super Trouper", "0J2p4KYdr6Mg4ET6JPlbe1"],
   ["Fleetwood Mac - Everywhere", "4k5FeWIdUaBx5OZdvrSYP1"],
   ["Hemlocke Springs - girlfriend", "7qkNf6D661jZI9yNqw27LA"],
